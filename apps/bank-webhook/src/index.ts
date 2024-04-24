@@ -2,8 +2,12 @@ import express from "express";
 import db from "@repo/db/client";
 const app = express();
 
+app.use(express.json());
+
 app.post("/hdfcwebhook", async (req, res) => {
+  console.log("Entered the webhook baby");
   console.log(req.body);
+
   const paymentInfo: {
     token: string;
     userId: string;
@@ -13,7 +17,6 @@ app.post("/hdfcwebhook", async (req, res) => {
     userId: req.body.user_identifier,
     amount: req.body.amount,
   };
-  console.log("Entered the webhook baby");
   try {
     await db.$transaction([
       db.balance.updateMany({

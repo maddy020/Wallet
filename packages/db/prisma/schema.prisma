@@ -15,6 +15,8 @@ model User {
   number      String  @unique
   password    String
   Balance     Balance[]
+  sender     p2pTransfer[] @relation(name:"Sender")
+  receiver   p2pTransfer[] @relation(name:"Receiver")
   onRampTransaction onRampTransaction[]
 }
 
@@ -45,7 +47,23 @@ model Balance{
   user User @relation(fields: [userId],references: [id]) 
 }
 
+model p2pTransfer{
+  id Int @id @default(autoincrement())
+  senderId Int
+  receiverId Int
+  amount Int
+  status TransferStatus
+  timestamp DateTime
+  sender User @relation(name:"Sender", fields: [senderId],references: [id]) 
+  receiver User @relation(name:"Receiver",fields: [receiverId],references: [id]) 
+}
+
 enum OnRampStatus {
+  Pending
+  Success
+  Failed
+}
+enum TransferStatus {
   Pending
   Success
   Failed

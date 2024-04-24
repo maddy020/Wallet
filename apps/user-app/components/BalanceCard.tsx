@@ -18,7 +18,7 @@ export default function BalanceCard({
       </div>
       <div className="w-full flex justify-between border-b border-slate-300 pb-2">
         <div>Total Balance</div>
-        <div>{amount + locked} INR</div>
+        <div>{(amount + locked) / 100} INR</div>
       </div>
     </Card>
   );
